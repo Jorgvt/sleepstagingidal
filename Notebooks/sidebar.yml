@@ -3,6 +3,7 @@ website:
     contents:
       - index.ipynb
       - 00_data_loading.ipynb
+      - 00b_sanity_checking.ipynb
       - section: Memo
         contents:
           - 00_Memo/00_data_loading.ipynb
