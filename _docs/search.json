@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "data.html",
+    "href": "data.html",
+    "title": "Data loading",
+    "section": "",
+    "text": "Stablishing a data-loading pipeline is always a good starting point for starting every project. In this case in particular, we have to be conscious because each .edf file we are going to work with is about 1 Gb, so performing lazy loading might become crucial for the project."
+  },
+  {
+    "objectID": "data.html#loading-.edf-files",
+    "href": "data.html#loading-.edf-files",
+    "title": "Data loading",
+    "section": "Loading .edf files",
+    "text": "Loading .edf files\n\nWe will be using mne.io.read_raw_edf.\n\n\npath_files = glob(os.path.join(path_data, \"*.edf\"))\n\n\nraw = mne.io.read_raw_edf(path_files[0], preload=False)\nraw\n\nExtracting EDF parameters from /media/2tbraid/antonia/PSG/PSG29.edf...\nEDF file detected\nSetting channel info structure...\nCreating raw.info structure...\n\n\n/tmp/ipykernel_213938/1189779846.py:1: RuntimeWarning: Omitted 200 annotation(s) that were outside data range.\n  raw = mne.io.read_raw_edf(path_files[0], preload=False)\n/tmp/ipykernel_213938/1189779846.py:1: RuntimeWarning: Limited 2 annotation(s) that were expanding outside the data range.\n  raw = mne.io.read_raw_edf(path_files[0], preload=False)\n\n\n\n\n    \n        Measurement date\n        \n        January 01, 2019  22:48:22 GMT\n        \n    \n    \n        Experimenter\n        \n        Unknown\n        \n    \n        Participant\n        \n        Unknown\n        \n    \n    \n        Digitized points\n        \n        Not available\n        \n    \n    \n        Good channels\n        50 EEG\n    \n    \n        Bad channels\n        None\n    \n    \n        EOG channels\n        Not available\n    \n    \n        ECG channels\n        Not available\n    \n    \n        Sampling frequency\n        512.00 Hz\n    \n    \n    \n    \n        Highpass\n        0.00 Hz\n    \n    \n    \n    \n        Lowpass\n        256.00 Hz\n    \n    \n    \n    \n    \n        Filenames\n        PSG29.edf\n    \n    \n    \n        Duration\n        06:37:04 (HH:MM:SS)\n    \n\n\n\nNow that we’ve loaded the file, we can downsample it to 100Hz and apply a low-pass filter to the signal:\n\n# Downsample the data to 100 Hz\nraw.resample(100)\n# Apply a bandpass filter from 0.1 to 40 Hz\nraw.filter(0.3, 49)\n\nFiltering raw data in 1 contiguous segment\nSetting up band-pass filter from 0.3 - 49 Hz\n\nFIR filter parameters\n---------------------\nDesigning a one-pass, zero-phase, non-causal bandpass filter:\n- Windowed time-domain design (firwin) method\n- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation\n- Lower passband edge: 0.30\n- Lower transition bandwidth: 0.30 Hz (-6 dB cutoff frequency: 0.15 Hz)\n- Upper passband edge: 49.00 Hz\n- Upper transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 49.50 Hz)\n- Filter length: 1101 samples (11.010 sec)\n\n\n\n[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.\n[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s\n[Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.2s remaining:    0.0s\n[Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.3s remaining:    0.0s\n[Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.4s remaining:    0.0s\n[Parallel(n_jobs=1)]: Done  50 out of  50 | elapsed:    4.6s finished\n\n\n\n\n    \n        Measurement date\n        \n        January 01, 2019  22:48:22 GMT\n        \n    \n    \n        Experimenter\n        \n        Unknown\n        \n    \n        Participant\n        \n        Unknown\n        \n    \n    \n        Digitized points\n        \n        Not available\n        \n    \n    \n        Good channels\n        50 EEG\n    \n    \n        Bad channels\n        None\n    \n    \n        EOG channels\n        Not available\n    \n    \n        ECG channels\n        Not available\n    \n    \n        Sampling frequency\n        100.00 Hz\n    \n    \n    \n    \n        Highpass\n        0.30 Hz\n    \n    \n    \n    \n        Lowpass\n        49.00 Hz\n    \n    \n    \n    \n    \n        Filenames\n        PSG29.edf\n    \n    \n    \n        Duration\n        06:37:04 (HH:MM:SS)\n    \n\n\n\nThe different channels of the signal are available in the attribute .ch_names:\n\nlen(raw.ch_names), raw.ch_names[:10]\n\n(50, ['C3', 'C4', 'O1', 'O2', 'A1', 'A2', 'Cz', 'F3', 'F4', 'F7'])\n\n\nWe can extract a subset of the channels by using the methods .pick_channels() and .drop_channels():\n\n# Select a subset of EEG channels\nraw.pick_channels(['LOC-A2', 'ROC-A1', 'F3-A2', 'C3-A2', 'O1-A2', 'F4-A1', 'C4-A1', 'O2-A1', 'X1', 'X2', 'X3'])\n\nValueError: No channels match the selection."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "sleepstagingidal",
+    "section": "",
+    "text": "git clone https://github.com/Jorgvt/sleepstagingidal.git\ncd sleepstagingidal\npip install -e ."
+  },
+  {
+    "objectID": "00_Memo/00_data_loading.html",
+    "href": "00_Memo/00_data_loading.html",
+    "title": "Data loading",
+    "section": "",
+    "text": "Stablishing a data-loading pipeline is always a good starting point for starting every project. In this case in particular, we have to be conscious because each .edf file we are going to work with is about 1 Gb, so performing lazy loading might become crucial for the project."
+  }
+]
