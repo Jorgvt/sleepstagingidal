@@ -5,14 +5,12 @@ __all__ = ['get_epochs']
 
 # %% ../Notebooks/00_data_loading.ipynb 3
 import os
-from tqdm.auto import tqdm
 from glob import glob
 from collections import Counter
 from typing import List, Tuple
 
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
 
 import mne
 import yasa
