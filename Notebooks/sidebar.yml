@@ -4,3 +4,4 @@ website:
       - index.ipynb
       - 00_data_loading.ipynb
       - 01_sanity_checking.ipynb
+      - 02_feature_extraction.ipynb

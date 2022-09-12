@@ -193,6 +193,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./dataa.html" class="sidebar-item-text sidebar-link">Sanity check</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./feature_extraction.html" class="sidebar-item-text sidebar-link">Feature extraction</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -207,6 +212,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#extracting-epochs-from-the-full-recordings" id="toc-extracting-epochs-from-the-full-recordings" class="nav-link" data-scroll-target="#extracting-epochs-from-the-full-recordings">Extracting epochs from the full recordings</a>
   <ul>
   <li><a href="#get_epochs" id="toc-get_epochs" class="nav-link" data-scroll-target="#get_epochs">get_epochs</a></li>
+  <li><a href="#get_epochs_from_path" id="toc-get_epochs_from_path" class="nav-link" data-scroll-target="#get_epochs_from_path">get_epochs_from_path</a></li>
   </ul></li>
   <li><a href="#inter-channel-operations" id="toc-inter-channel-operations" class="nav-link" data-scroll-target="#inter-channel-operations">Inter-channel operations</a></li>
   </ul>
@@ -595,11 +601,12 @@ Designing a one-pass, zero-phase, non-causal bandpass filter:
 <p><code>mne.events_from_annotations()</code> allows us to filter by regexp, so we will be able to keep only the epochs corresponding to the labels we care about.</p>
 </blockquote>
 <hr>
-<p><a href="https://github.com/Jorgvt/sleepstagingidal/blob/master/sleepstagingidal/data.py#L21" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/sleepstagingidal/blob/master/sleepstagingidal/data.py#L19" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="get_epochs" class="level3">
 <h3 class="anchored" data-anchor-id="get_epochs">get_epochs</h3>
 <blockquote class="blockquote">
-<pre><code> get_epochs (data:mne.io.edf.edf.RawEDF, channels:List[str]=None)</code></pre>
+<pre><code> get_epochs (data:mne.io.edf.edf.RawEDF, channels:List[str]=None,
+             verbose:bool=False)</code></pre>
 </blockquote>
 <p>Extracts labelled epochs from an already loaded raw edf file.</p>
 <table class="table">
@@ -631,6 +638,64 @@ Designing a one-pass, zero-phase, non-causal bandpass filter:
 <td>List of channels to keep. If None all the channels are kept.</td>
 </tr>
 <tr class="odd">
+<td>verbose</td>
+<td>bool</td>
+<td>False</td>
+<td>Amount of information shown when loading the file.</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>typing.Tuple[mne.epochs.Epochs, float]</strong></td>
+<td></td>
+<td><strong>Epochs object and samplign rate of the signal.</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><a href="https://github.com/Jorgvt/sleepstagingidal/blob/master/sleepstagingidal/data.py#L42" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="get_epochs_from_path" class="level3">
+<h3 class="anchored" data-anchor-id="get_epochs_from_path">get_epochs_from_path</h3>
+<blockquote class="blockquote">
+<pre><code> get_epochs_from_path (path:str, channels:List[str]=None,
+                       verbose:bool=False)</code></pre>
+</blockquote>
+<p>Extracts labelled epochs from an <code>.edf</code> file.</p>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>path</td>
+<td>str</td>
+<td></td>
+<td>Path to an <code>.edf</code> file.</td>
+</tr>
+<tr class="even">
+<td>channels</td>
+<td>typing.List[str]</td>
+<td>None</td>
+<td>List of channels to keep. If None all the channels are kept.</td>
+</tr>
+<tr class="odd">
+<td>verbose</td>
+<td>bool</td>
+<td>False</td>
+<td>Amount of information shown when loading the file.</td>
+</tr>
+<tr class="even">
 <td><strong>Returns</strong></td>
 <td><strong>typing.Tuple[mne.epochs.Epochs, float]</strong></td>
 <td></td>
@@ -639,7 +704,7 @@ Designing a one-pass, zero-phase, non-causal bandpass filter:
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>epochs, sr <span class="op">=</span> get_epochs(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>epochs, sr <span class="op">=</span> get_epochs(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Used Annotations descriptions: ['Sleep stage N1', 'Sleep stage N2', 'Sleep stage W']
 Not setting metadata
@@ -652,7 +717,7 @@ Using data from preloaded Raw for 719 events and 3000 original time points ...
 </div>
 <p>When this objects are created without <code>preloading=True</code>, we need to use the method <code>.get_data()</code> to access the data. As this kind of data uses a lot of memmory, the data of each epoch only are loaded when this method is called. We can check the shape of an epoch:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>epochs[<span class="dv">0</span>].get_data().shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>epochs[<span class="dv">0</span>].get_data().shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using data from preloaded Raw for 1 events and 3000 original time points ...</code></pre>
 </div>
@@ -670,7 +735,7 @@ Using data from preloaded Raw for 719 events and 3000 original time points ...
 <li><code>.event_id</code>: dictionary mapping the parsed labels to the original labels.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>epochs.events</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>epochs.events</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>array([[ 228000,       0,       3],
        [ 231000,       0,       3],
@@ -682,7 +747,7 @@ Using data from preloaded Raw for 719 events and 3000 original time points ...
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>epochs.event_id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>epochs.event_id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>{'Sleep stage N1': 1, 'Sleep stage N2': 2, 'Sleep stage W': 3}</code></pre>
 </div>
@@ -694,10 +759,10 @@ Using data from preloaded Raw for 719 events and 3000 original time points ...
 <h2 class="anchored" data-anchor-id="inter-channel-operations">Inter-channel operations</h2>
 <p>Real practitioners don’t actually use the data as we have imported it. They only utilize 9 channels, and perform reference operations between them. We can now reload the data using only this channels to save memory and perform the reference operations:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>channels <span class="op">=</span> [<span class="st">"C3"</span>, <span class="st">"C4"</span>, <span class="st">"A1"</span>, <span class="st">"A2"</span>, <span class="st">"O1"</span>, <span class="st">"O2"</span>, <span class="st">"LOC"</span>, <span class="st">"ROC"</span>, <span class="st">"LAT1"</span>, <span class="st">"LAT2"</span>, <span class="st">"ECGL"</span>, <span class="st">"ECGR"</span>, <span class="st">"CHIN1"</span>, <span class="st">"CHIN2"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>channels <span class="op">=</span> [<span class="st">"C3"</span>, <span class="st">"C4"</span>, <span class="st">"A1"</span>, <span class="st">"A2"</span>, <span class="st">"O1"</span>, <span class="st">"O2"</span>, <span class="st">"LOC"</span>, <span class="st">"ROC"</span>, <span class="st">"LAT1"</span>, <span class="st">"LAT2"</span>, <span class="st">"ECGL"</span>, <span class="st">"ECGR"</span>, <span class="st">"CHIN1"</span>, <span class="st">"CHIN2"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>epochs, sr <span class="op">=</span> get_epochs(raw, channels<span class="op">=</span>channels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>epochs, sr <span class="op">=</span> get_epochs(raw, channels<span class="op">=</span>channels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Used Annotations descriptions: ['Sleep stage N1', 'Sleep stage N2', 'Sleep stage W']
 Not setting metadata
@@ -712,9 +777,9 @@ Using data from preloaded Raw for 719 events and 3000 original time points ...
 <p><span class="math display">\[ C3 - \frac{A1+A2}{2} \]</span> <span class="math display">\[ C4 - \frac{A1+A2}{2} \]</span> <span class="math display">\[ 01 - \frac{A1+A2}{2} \]</span> <span class="math display">\[ 02 - \frac{A1+A2}{2} \]</span> <span class="math display">\[ LOC - A2 \]</span> <span class="math display">\[ ROC - A1 \]</span> <span class="math display">\[ LAT1 - LAT2 \]</span> <span class="math display">\[ ECGL - ECGR \]</span> <span class="math display">\[ CHIN1 - CHIN2 \]</span></p>
 <p>In order to mantain the code clean, we can put our data into a dictionary and then perform the operations. But fist we will load all the data in memory:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> epochs.get_data()</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> epochs.events[:,<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>X.shape, Y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> epochs.get_data()</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> epochs.events[:,<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>X.shape, Y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using data from preloaded Raw for 718 events and 3000 original time points ...</code></pre>
 </div>
@@ -723,24 +788,24 @@ Using data from preloaded Raw for 719 events and 3000 original time points ...
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to expand_dims to keep the channels dim</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {ch:np.expand_dims(X[:,i,:],<span class="dv">1</span>) <span class="cf">for</span> i, ch <span class="kw">in</span> <span class="bu">enumerate</span>(channels)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to expand_dims to keep the channels dim</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {ch:np.expand_dims(X[:,i,:],<span class="dv">1</span>) <span class="cf">for</span> i, ch <span class="kw">in</span> <span class="bu">enumerate</span>(channels)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>channel1 <span class="op">=</span> data[<span class="st">"C3"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>channel2 <span class="op">=</span> data[<span class="st">"C4"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>channel3 <span class="op">=</span> data[<span class="st">"O1"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>channel4 <span class="op">=</span> data[<span class="st">"O2"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>channel5 <span class="op">=</span> data[<span class="st">"LOC"</span>] <span class="op">-</span> data[<span class="st">"A2"</span>]</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>channel6 <span class="op">=</span> data[<span class="st">"ROC"</span>] <span class="op">-</span> data[<span class="st">"A1"</span>]</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>channel7 <span class="op">=</span> data[<span class="st">"LAT1"</span>] <span class="op">-</span> data[<span class="st">"LAT2"</span>]</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>channel8 <span class="op">=</span> data[<span class="st">"ECGL"</span>] <span class="op">-</span> data[<span class="st">"ECGR"</span>]</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>channel9 <span class="op">=</span> data[<span class="st">"CHIN1"</span>] <span class="op">-</span> data[<span class="st">"CHIN2"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>channel1 <span class="op">=</span> data[<span class="st">"C3"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>channel2 <span class="op">=</span> data[<span class="st">"C4"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>channel3 <span class="op">=</span> data[<span class="st">"O1"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>channel4 <span class="op">=</span> data[<span class="st">"O2"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>channel5 <span class="op">=</span> data[<span class="st">"LOC"</span>] <span class="op">-</span> data[<span class="st">"A2"</span>]</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>channel6 <span class="op">=</span> data[<span class="st">"ROC"</span>] <span class="op">-</span> data[<span class="st">"A1"</span>]</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>channel7 <span class="op">=</span> data[<span class="st">"LAT1"</span>] <span class="op">-</span> data[<span class="st">"LAT2"</span>]</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>channel8 <span class="op">=</span> data[<span class="st">"ECGL"</span>] <span class="op">-</span> data[<span class="st">"ECGR"</span>]</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>channel9 <span class="op">=</span> data[<span class="st">"CHIN1"</span>] <span class="op">-</span> data[<span class="st">"CHIN2"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we can concatenate the new channels into a new array:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.concatenate([channel1, channel2, channel3, channel4, channel5, channel6, channel7, channel8, channel9],<span class="dv">1</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.concatenate([channel1, channel2, channel3, channel4, channel5, channel6, channel7, channel8, channel9],<span class="dv">1</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>(718, 9, 3000)</code></pre>
 </div>
