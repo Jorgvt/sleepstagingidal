@@ -5,3 +5,6 @@ website:
       - 00_data_loading.ipynb
       - 01_sanity_checking.ipynb
       - 02_feature_extraction.ipynb
+      - section: Experiments
+        contents:
+          - 01_Experiments/00_basic_features_own_patient.ipynb

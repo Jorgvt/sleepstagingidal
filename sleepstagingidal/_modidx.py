@@ -15,4 +15,6 @@ d = { 'settings': { 'branch': 'master',
                                         'sleepstagingidal.dataa.swap_dict': ( 'sanity_checking.html#swap_dict',
                                                                               'sleepstagingidal/dataa.py')},
             'sleepstagingidal.feature_extraction': { 'sleepstagingidal.feature_extraction.calculate_bandpower': ( 'feature_extraction.html#calculate_bandpower',
-                                                                                                                  'sleepstagingidal/feature_extraction.py')}}}
+                                                                                                                  'sleepstagingidal/feature_extraction.py'),
+                                                     'sleepstagingidal.feature_extraction.read_clean_edf': ( 'feature_extraction.html#read_clean_edf',
+                                                                                                             'sleepstagingidal/feature_extraction.py')}}}
