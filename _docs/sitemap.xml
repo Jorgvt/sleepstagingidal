@@ -2,22 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/feature_extraction.html</loc>
-    <lastmod>2022-09-13T19:49:11.437Z</lastmod>
+    <lastmod>2022-09-19T19:40:57.124Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Jorgvt.github.io/sleepstagingidal/cross_validation.html</loc>
+    <lastmod>2022-09-19T19:40:57.700Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/data.html</loc>
-    <lastmod>2022-09-13T19:49:12.141Z</lastmod>
+    <lastmod>2022-09-19T19:40:58.368Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/dataa.html</loc>
-    <lastmod>2022-09-13T19:49:12.737Z</lastmod>
+    <lastmod>2022-09-19T19:40:59.016Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/01_Experiments/00_basic_features_own_patient.html</loc>
-    <lastmod>2022-09-13T19:49:13.229Z</lastmod>
+    <lastmod>2022-09-19T19:40:59.516Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/index.html</loc>
-    <lastmod>2022-09-13T19:49:13.813Z</lastmod>
+    <lastmod>2022-09-19T19:41:00.140Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Jorgvt.github.io/sleepstagingidal/02_Exporting_features/02_00_basic_features.html</loc>
+    <lastmod>2022-09-19T19:41:00.600Z</lastmod>
   </url>
 </urlset>

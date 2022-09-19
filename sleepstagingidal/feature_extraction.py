@@ -18,6 +18,7 @@ import yasa
 
 from .data import *
 from .dataa import *
+from .dataa import swap_dict
 
 # %% ../Notebooks/02_feature_extraction.ipynb 11
 def read_clean_edf(path, # Path to an `.edf` file.
@@ -45,3 +46,36 @@ def calculate_bandpower(epochs, # Epochs object or 3D array [Epochs, Channels, D
         if len(df_bandpower) != bandpowers.shape[-1]: raise ValueError("Shape mismatch between calculated features and pre-allocated array.")
         bandpowers[i] = df_bandpower
     return bandpowers
+
+
+# %% ../Notebooks/03_cross_validation.ipynb 16
+def unify_labels(events: List[np.array], # List of events corresponding to different recordings encoded.
+                 mappings: List[Dict], # List of mappings to turn the encoded labels into human-readable labels.
+                 ) -> List[List[str]]: # List of labels arrays corresponding to different recordings in human-redable form.
+    return [map_events(events_, swap_dict(mapping)) for events_, mapping in zip(events, mappings)]
+
+# %% ../Notebooks/03_cross_validation.ipynb 17
+def unify_labels_from_epochs(epochs: List[mne.epochs.Epochs], # List of `mne.epochs.Epochs`.
+                             ) -> List[List[str]]: # List of labels arrays corresponding to different recordings in human-redable form.
+    events = [e.events for e in epochs]
+    mappings = [e.event_id for e in epochs]
+    return [map_events(events_, swap_dict(mapping)) for events_, mapping in zip(events, mappings)]
+
+# %% ../Notebooks/03_cross_validation.ipynb 19
+def get_trainable_from_patients(patients: List[mne.io.edf.edf.RawEDF], # List of loaded Raw `.edf` files.
+                                channels: List[str], # Channels to be used.
+                                feature_extraction_fn, # Function to be applied to the `Epochs` to extract features.
+                                ) -> Tuple[np.array, np.array]: # X and Y data ready to be used to train a model.
+    """
+    Extract epochs and features from `patients` and concatenate all of them 
+    so that the output can be used to directly train a model.
+    """
+    features_all, labels_all = [], []
+    for patient in track(patients, description="Building data from recordings..."):
+        epochs, sr = get_epochs(patient, channels=channels)
+        features = feature_extraction_fn(epochs)
+        labels = map_events(epochs.events, swap_dict(epochs.event_id))
+        features_all.append(features)
+        labels_all.append(labels)
+    features_all, labels_all = np.concatenate(features_all), np.concatenate(labels_all)
+    return features_all, labels_all

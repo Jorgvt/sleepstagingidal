@@ -197,6 +197,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./feature_extraction.html" class="sidebar-item-text sidebar-link active">Feature extraction</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cross_validation.html" class="sidebar-item-text sidebar-link">Validating the results</a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Experiments</a>
@@ -208,6 +213,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01_Experiments/00_basic_features_own_patient.html" class="sidebar-item-text sidebar-link">Using basic features within the same patient</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Exporting_features</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_Exporting_features/02_00_basic_features.html" class="sidebar-item-text sidebar-link">Exporting basic features</a>
   </div>
 </li>
       </ul>
@@ -269,7 +289,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yasa</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sleepstagingidal.data <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sleepstagingidal.dataa <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sleepstagingidal.dataa <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sleepstagingidal.dataa <span class="im">import</span> swap_dict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="amplitude-independent-features" class="level2">
 <h2 class="anchored" data-anchor-id="amplitude-independent-features">Amplitude-independent features</h2>
@@ -283,7 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Before extracting the features, we are going to perform downsampling and a bandpass filter to keep only the low frequencies:</p>
 <hr>
-<p><a href="https://github.com/Jorgvt/sleepstagingidal/blob/master/sleepstagingidal/feature_extraction.py#L23" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/sleepstagingidal/blob/master/sleepstagingidal/feature_extraction.py#L24" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="read_clean_edf" class="level3">
 <h3 class="anchored" data-anchor-id="read_clean_edf">read_clean_edf</h3>
 <blockquote class="blockquote">
@@ -376,7 +397,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <hr>
-<p><a href="https://github.com/Jorgvt/sleepstagingidal/blob/master/sleepstagingidal/feature_extraction.py#L35" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/sleepstagingidal/blob/master/sleepstagingidal/feature_extraction.py#L36" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="calculate_bandpower" class="level3">
 <h3 class="anchored" data-anchor-id="calculate_bandpower">calculate_bandpower</h3>
