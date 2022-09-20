@@ -9,6 +9,7 @@ website:
       - section: Experiments
         contents:
           - 01_Experiments/00_basic_features_own_patient.ipynb
+          - 01_Experiments/01_basic_features.ipynb
       - section: Exporting_features
         contents:
           - 02_Exporting_features/02_00_basic_features.ipynb
