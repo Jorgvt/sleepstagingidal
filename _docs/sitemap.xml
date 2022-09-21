@@ -2,34 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/feature_extraction.html</loc>
-    <lastmod>2022-09-20T23:50:54.000Z</lastmod>
+    <lastmod>2022-09-21T18:17:49.345Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/cross_validation.html</loc>
-    <lastmod>2022-09-20T23:50:54.544Z</lastmod>
+    <lastmod>2022-09-21T18:17:50.173Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/data.html</loc>
-    <lastmod>2022-09-20T23:50:55.168Z</lastmod>
+    <lastmod>2022-09-21T18:17:51.245Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/dataa.html</loc>
-    <lastmod>2022-09-20T23:50:55.740Z</lastmod>
+    <lastmod>2022-09-21T18:17:52.189Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/01_Experiments/01_basic_features.html</loc>
-    <lastmod>2022-09-20T23:50:56.336Z</lastmod>
+    <lastmod>2022-09-21T18:17:53.153Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Jorgvt.github.io/sleepstagingidal/01_Experiments/01b_basic_features_all_binary.html</loc>
+    <lastmod>2022-09-21T18:17:54.069Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/01_Experiments/00_basic_features_own_patient.html</loc>
-    <lastmod>2022-09-20T23:50:56.732Z</lastmod>
+    <lastmod>2022-09-21T18:17:54.717Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/index.html</loc>
-    <lastmod>2022-09-20T23:50:57.412Z</lastmod>
+    <lastmod>2022-09-21T18:17:55.693Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/sleepstagingidal/02_Exporting_features/02_00_basic_features.html</loc>
-    <lastmod>2022-09-20T23:50:57.912Z</lastmod>
+    <lastmod>2022-09-21T18:17:56.449Z</lastmod>
   </url>
 </urlset>
