@@ -3,9 +3,14 @@ website:
     contents:
       - index.ipynb
       - 00_data_loading.ipynb
-      - 01_sanity_checking.ipynb
       - 02_feature_extraction.ipynb
       - 03_cross_validation.ipynb
+      - section: Sanity_Checking
+        contents:
+          - 00_Sanity_Checking/00_01_sanity_checking.ipynb
+          - 00_Sanity_Checking/00_01b_checking_bad_recordings.html
+          - 00_Sanity_Checking/00_01b_checking_bad_recordings.ipynb
+          - 00_Sanity_Checking/00_02_checking_annotations.ipynb
       - section: Experiments
         contents:
           - 01_Experiments/00_basic_features_own_patient.ipynb

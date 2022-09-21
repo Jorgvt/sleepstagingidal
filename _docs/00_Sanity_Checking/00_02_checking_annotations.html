@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="In this notebook we will be using a very simple feature extraction and then train a very simple classifier within the same patient (we take data from one recording and split it in a train/test split) to assess the differences that may arise between patients. We expect to see that almost all of the patients behave similarly, but we could be surprised.">
+<meta name="description" content="We’re going to check all the different annotations we have.">
 
-<title>sleepstagingidal - Using basic features within the same patient</title>
+<title>sleepstagingidal - Checking annotations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -125,15 +125,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="sleepstagingidal - Using basic features within the same patient">
-<meta property="og:description" content="In this notebook we will be using a very simple feature extraction and then train a very simple classifier within the same patient (we take data from one recording and split it in a train/test split) to assess the differences that may arise between patients. We expect to see that almost all of the patients behave similarly, but we could be surprised.">
+<meta property="og:title" content="sleepstagingidal - Checking annotations">
+<meta property="og:description" content="We’re going to check all the different annotations we have.">
 <meta property="og:site-name" content="sleepstagingidal">
-<meta name="twitter:title" content="sleepstagingidal - Using basic features within the same patient">
-<meta name="twitter:description" content="In this notebook we will be using a very simple feature extraction and then train a very simple classifier within the same patient (we take data from one recording and split it in a train/test split) to assess the differences that may arise between patients. We expect to see that almost all of the patients behave similarly, but we could be surprised.">
+<meta name="twitter:title" content="sleepstagingidal - Checking annotations">
+<meta name="twitter:description" content="We’re going to check all the different annotations we have.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -165,7 +164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Using basic features within the same patient</h1>
+      <h1 class="quarto-secondary-nav-title">Checking annotations</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -221,7 +220,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../00_Sanity_Checking/00_02_checking_annotations.html" class="sidebar-item-text sidebar-link">Checking annotations</a>
+  <a href="../00_Sanity_Checking/00_02_checking_annotations.html" class="sidebar-item-text sidebar-link active">Checking annotations</a>
   </div>
 </li>
       </ul>
@@ -236,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01_Experiments/00_basic_features_own_patient.html" class="sidebar-item-text sidebar-link active">Using basic features within the same patient</a>
+  <a href="../01_Experiments/00_basic_features_own_patient.html" class="sidebar-item-text sidebar-link">Using basic features within the same patient</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -271,25 +270,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#looping-through-patients" id="toc-looping-through-patients" class="nav-link active" data-scroll-target="#looping-through-patients">Looping through patients</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Jorgvt/sleepstagingidal/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Using basic features within the same patient</h1>
+<h1 class="title d-none d-lg-block">Checking annotations</h1>
 </div>
 
 <div>
   <div class="description">
-    In this notebook we will be using a very simple feature extraction and then train a very simple classifier within the same patient (we take data from one recording and split it in a train/test split) to assess the differences that may arise between patients. We expect to see that almost all of the patients behave similarly, but we could be surprised.
+    We’re going to check all the different annotations we have.
   </div>
 </div>
 
@@ -304,56 +297,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>We are going to load all the files and check their <code>.annotations</code> attribute to extract the important ones:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> glob <span class="im">import</span> glob</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List, Dict</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.progress <span class="im">import</span> track</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mne</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yasa</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, cross_validate</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sleepstagingidal.data <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sleepstagingidal.dataa <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sleepstagingidal.feature_extraction <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>path_files <span class="op">=</span> glob(os.path.join(path_data, <span class="st">"*.edf"</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(path_files)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>36</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>path_files <span class="op">=</span> glob(os.path.join(path_data, <span class="st">"*.edf"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>raws <span class="op">=</span> [mne.io.read_raw_edf(path, preload<span class="op">=</span><span class="va">False</span>, verbose<span class="op">=</span><span class="va">False</span>) <span class="cf">for</span> path <span class="kw">in</span> path_files]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>channels <span class="op">=</span> [<span class="st">"C3"</span>, <span class="st">"C4"</span>, <span class="st">"A1"</span>, <span class="st">"A2"</span>, <span class="st">"O1"</span>, <span class="st">"O2"</span>, <span class="st">"LOC"</span>, <span class="st">"ROC"</span>, <span class="st">"LAT1"</span>, <span class="st">"LAT2"</span>, <span class="st">"ECGL"</span>, <span class="st">"ECGR"</span>, <span class="st">"CHIN1"</span>, <span class="st">"CHIN2"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>anns <span class="op">=</span> np.concatenate([raw.annotations.description <span class="cf">for</span> raw <span class="kw">in</span> raws])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(anns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>70822</code></pre>
 </div>
-<section id="looping-through-patients" class="level2">
-<h2 class="anchored" data-anchor-id="looping-through-patients">Looping through patients</h2>
-<blockquote class="blockquote">
-<p>As we only want to perform a very basic check, we are going to be looping through all the patients.</p>
-</blockquote>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> {}</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> path <span class="kw">in</span> track(path_files):</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    file_name <span class="op">=</span> path.split(<span class="st">"/"</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    raw <span class="op">=</span> read_clean_edf(path, resample<span class="op">=</span><span class="dv">100</span>, bandpass<span class="op">=</span>(<span class="fl">0.3</span>, <span class="dv">49</span>))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    epochs, sr <span class="op">=</span> get_epochs(raw, channels<span class="op">=</span>channels)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    bandpowers <span class="op">=</span> calculate_bandpower(epochs, sf<span class="op">=</span>sr)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> epochs.events[:,<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    results_cv <span class="op">=</span> cross_validate(RandomForestClassifier(random_state<span class="op">=</span><span class="dv">42</span>), bandpowers, labels)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    results[file_name] <span class="op">=</span> results_cv[<span class="st">'test_score'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can put the logged results into a <code>DataFrame</code> and save them as <code>.csv</code> to avoid having to repeat the experiment:</p>
+<p>It’s easier to understand the information if we represent it visually:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame.from_dict(results, orient<span class="op">=</span><span class="st">'index'</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.index.set_names(<span class="st">"File"</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Mean'</span>] <span class="op">=</span> df.mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Std'</span>] <span class="op">=</span> df.std(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cntr <span class="op">=</span> Counter(anns)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">6</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.bar(cntr.keys(), cntr.values())</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">90</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Annotation"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Counts"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Count of each annotation"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="00_02_checking_annotations_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>It can be usefull as well to store this information as a <code>.csv</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_anns <span class="op">=</span> pd.DataFrame.from_dict(cntr, orient<span class="op">=</span><span class="st">'index'</span>, columns<span class="op">=</span>[<span class="st">'Counts'</span>])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_anns.index.set_names(<span class="st">'Annotation'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df_anns.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
 <div>
@@ -362,75 +342,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <thead>
     <tr>
       <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>Mean</th>
-      <th>Std</th>
+      <th>Counts</th>
     </tr>
     <tr>
-      <th>File</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Annotation</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>PSG29.edf</th>
-      <td>0.548611</td>
-      <td>0.472222</td>
-      <td>0.444444</td>
-      <td>0.321678</td>
-      <td>0.517483</td>
-      <td>0.460888</td>
-      <td>0.078328</td>
+      <th>Montage:PR, Ref</th>
+      <td>56</td>
     </tr>
     <tr>
-      <th>PSG12.edf</th>
-      <td>0.411765</td>
-      <td>0.392157</td>
-      <td>0.614379</td>
-      <td>0.398693</td>
-      <td>0.473684</td>
-      <td>0.458136</td>
-      <td>0.083295</td>
+      <th>Start Recording</th>
+      <td>37</td>
     </tr>
     <tr>
-      <th>PSG17.edf</th>
-      <td>0.349693</td>
-      <td>0.561728</td>
-      <td>0.537037</td>
-      <td>0.506173</td>
-      <td>0.209877</td>
-      <td>0.432902</td>
-      <td>0.133771</td>
+      <th>Recording Analyzer - Sleep Events</th>
+      <td>36</td>
     </tr>
     <tr>
-      <th>PSG10.edf</th>
-      <td>0.657895</td>
-      <td>0.801325</td>
-      <td>0.629139</td>
-      <td>0.344371</td>
-      <td>0.576159</td>
-      <td>0.601778</td>
-      <td>0.148749</td>
+      <th>Recording Analyzer - Auto-Staging</th>
+      <td>36</td>
     </tr>
     <tr>
-      <th>PSG23.edf</th>
-      <td>0.873418</td>
-      <td>0.815287</td>
-      <td>0.821656</td>
-      <td>0.878981</td>
-      <td>0.605096</td>
-      <td>0.798887</td>
-      <td>0.100312</td>
+      <th>Recording Analyzer - ECG</th>
+      <td>36</td>
     </tr>
   </tbody>
 </table>
@@ -438,11 +376,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"Results/00_basic_features_own_patient.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_anns.to_csv(<span class="st">"annotations.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
