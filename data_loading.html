@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Always make sure you can load all your data.">
+
+<title>sleepstagingidal - Data loading</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="sleepstagingidal - Data loading">
+<meta property="og:description" content="Always make sure you can load all your data.">
+<meta property="og:site-name" content="sleepstagingidal">
+<meta name="twitter:title" content="sleepstagingidal - Data loading">
+<meta name="twitter:description" content="Always make sure you can load all your data.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">sleepstagingidal</span>
+    </a>
+  </div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Data loading</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">sleepstagingidal</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_loading.html" class="sidebar-item-text sidebar-link active">Data loading</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./feature_extraction.html" class="sidebar-item-text sidebar-link">Feature extraction</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cross_validation.html" class="sidebar-item-text sidebar-link">Validating the results</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Sanity_Checking</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_Sanity_Checking/sanity_checking.html" class="sidebar-item-text sidebar-link">Sanity check</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_Sanity_Checking/checking_bad_recordings.html" class="sidebar-item-text sidebar-link">Checking bad recordings</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_Sanity_Checking/checking_annotations.html" class="sidebar-item-text sidebar-link">Checking annotations</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Experiments</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_Experiments/basic_features_own_patient.html" class="sidebar-item-text sidebar-link">Using basic features within the same patient</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_Experiments/basic_features.html" class="sidebar-item-text sidebar-link">[REM/NO REM] Pre-extracted basic features</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_Experiments/basic_features_all_binary.html" class="sidebar-item-text sidebar-link">[All] Pre-extracted basic features</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Exporting_features</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_Exporting_features/basic_features.html" class="sidebar-item-text sidebar-link">Exporting basic features</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#loading-.edf-files" id="toc-loading-.edf-files" class="nav-link active" data-scroll-target="#loading-.edf-files">Loading <code>.edf</code> files</a></li>
+  <li><a href="#making-use-of-the-annotations-in-the-recordings" id="toc-making-use-of-the-annotations-in-the-recordings" class="nav-link" data-scroll-target="#making-use-of-the-annotations-in-the-recordings">Making use of the annotations in the recordings</a></li>
+  <li><a href="#extracting-epochs-from-the-full-recordings" id="toc-extracting-epochs-from-the-full-recordings" class="nav-link" data-scroll-target="#extracting-epochs-from-the-full-recordings">Extracting epochs from the full recordings</a>
+  <ul class="collapse">
+  <li><a href="#get_epochs" id="toc-get_epochs" class="nav-link" data-scroll-target="#get_epochs">get_epochs</a></li>
+  <li><a href="#get_epochs_from_path" id="toc-get_epochs_from_path" class="nav-link" data-scroll-target="#get_epochs_from_path">get_epochs_from_path</a></li>
+  </ul></li>
+  <li><a href="#inter-channel-operations" id="toc-inter-channel-operations" class="nav-link" data-scroll-target="#inter-channel-operations">Inter-channel operations</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Jorgvt/sleepstagingidal/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Data loading</h1>
+</div>
+
+<div>
+  <div class="description">
+    Always make sure you can load all your data.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>Stablishing a data-loading pipeline is always a good starting point for starting every project. In this case in particular, we have to be conscious because each <code>.edf</code> file we are going to work with is about 1 Gb, so performing lazy loading might become crucial for the project.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> glob <span class="im">import</span> glob</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List, Tuple</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mne</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yasa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="loading-.edf-files" class="level2">
+<h2 class="anchored" data-anchor-id="loading-.edf-files">Loading <code>.edf</code> files</h2>
+<blockquote class="blockquote">
+<p>We will be using <code>mne.io.read_raw_edf</code>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>path_files <span class="op">=</span> glob(os.path.join(path_data, <span class="st">"*.edf"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>raw <span class="op">=</span> mne.io.read_raw_edf(path_files[<span class="dv">0</span>], preload<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>raw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Extracting EDF parameters from /media/2tbraid/antonia/PSG/PSG29.edf...
+EDF file detected
+Setting channel info structure...
+Creating raw.info structure...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_227803/1189779846.py:1: RuntimeWarning: Omitted 200 annotation(s) that were outside data range.
+  raw = mne.io.read_raw_edf(path_files[0], preload=False)
+/tmp/ipykernel_227803/1189779846.py:1: RuntimeWarning: Limited 2 annotation(s) that were expanding outside the data range.
+  raw = mne.io.read_raw_edf(path_files[0], preload=False)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+
+<table class="table table-hover table-striped table-sm table-responsive small">
+    <tbody><tr>
+        <th>Measurement date</th>
+        
+        <td>January 01, 2019  22:48:22 GMT</td>
+        
+    </tr>
+    <tr>
+        <th>Experimenter</th>
+        
+        <td>Unknown</td>
+        
+    </tr>
+        <tr><th>Participant</th>
+        
+        <td>Unknown</td>
+        
+    </tr>
+    <tr>
+        <th>Digitized points</th>
+        
+        <td>Not available</td>
+        
+    </tr>
+    <tr>
+        <th>Good channels</th>
+        <td>50 EEG</td>
+    </tr>
+    <tr>
+        <th>Bad channels</th>
+        <td>None</td>
+    </tr>
+    <tr>
+        <th>EOG channels</th>
+        <td>Not available</td>
+    </tr>
+    <tr>
+        <th>ECG channels</th>
+        <td>Not available</td>
+    
+    </tr><tr>
+        <th>Sampling frequency</th>
+        <td>512.00 Hz</td>
+    </tr>
+    
+    
+    <tr>
+        <th>Highpass</th>
+        <td>0.00 Hz</td>
+    </tr>
+    
+    
+    <tr>
+        <th>Lowpass</th>
+        <td>256.00 Hz</td>
+    </tr>
+    
+    
+    
+    <tr>
+        <th>Filenames</th>
+        <td>PSG29.edf</td>
+    </tr>
+    
+    <tr>
+        <th>Duration</th>
+        <td>06:37:04 (HH:MM:SS)</td>
+    </tr>
+</tbody></table>
+</div>
+</div>
+<p>Now that we’ve loaded the file, we can downsample it to 100Hz and apply a low-pass filter to the signal:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Downsample the data to 100 Hz</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>raw.resample(<span class="dv">100</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply a bandpass filter from 0.3 to 49 Hz</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>raw.<span class="bu">filter</span>(<span class="fl">0.3</span>, <span class="dv">49</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.3 - 49 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.30
+- Lower transition bandwidth: 0.30 Hz (-6 dB cutoff frequency: 0.15 Hz)
+- Upper passband edge: 49.00 Hz
+- Upper transition bandwidth: 1.00 Hz (-6 dB cutoff frequency: 49.50 Hz)
+- Filter length: 1101 samples (11.010 sec)
+</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done   1 out of   1 | elapsed:    0.1s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   2 out of   2 | elapsed:    0.2s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   3 out of   3 | elapsed:    0.3s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done   4 out of   4 | elapsed:    0.4s remaining:    0.0s
+[Parallel(n_jobs=1)]: Done  50 out of  50 | elapsed:    4.5s finished</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+
+<table class="table table-hover table-striped table-sm table-responsive small">
+    <tbody><tr>
+        <th>Measurement date</th>
+        
+        <td>January 01, 2019  22:48:22 GMT</td>
+        
+    </tr>
+    <tr>
+        <th>Experimenter</th>
+        
+        <td>Unknown</td>
+        
+    </tr>
+        <tr><th>Participant</th>
+        
+        <td>Unknown</td>
+        
+    </tr>
+    <tr>
+        <th>Digitized points</th>
+        
+        <td>Not available</td>
+        
+    </tr>
+    <tr>
+        <th>Good channels</th>
+        <td>50 EEG</td>
+    </tr>
+    <tr>
+        <th>Bad channels</th>
+        <td>None</td>
+    </tr>
+    <tr>
+        <th>EOG channels</th>
+        <td>Not available</td>
+    </tr>
+    <tr>
+        <th>ECG channels</th>
+        <td>Not available</td>
+    
+    </tr><tr>
+        <th>Sampling frequency</th>
+        <td>100.00 Hz</td>
+    </tr>
+    
+    
+    <tr>
+        <th>Highpass</th>
+        <td>0.30 Hz</td>
+    </tr>
+    
+    
+    <tr>
+        <th>Lowpass</th>
+        <td>49.00 Hz</td>
+    </tr>
+    
+    
+    
+    <tr>
+        <th>Filenames</th>
+        <td>PSG29.edf</td>
+    </tr>
+    
+    <tr>
+        <th>Duration</th>
+        <td>06:37:04 (HH:MM:SS)</td>
+    </tr>
+</tbody></table>
+</div>
+</div>
+<p>The different channels of the signal are available in the attribute <code>.ch_names</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(raw.ch_names))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>raw.ch_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>50</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>['C3',
+ 'C4',
+ 'O1',
+ 'O2',
+ 'A1',
+ 'A2',
+ 'Cz',
+ 'F3',
+ 'F4',
+ 'F7',
+ 'F8',
+ 'Fz',
+ 'Fp1',
+ 'Fp2',
+ 'Fpz',
+ 'P3',
+ 'P4',
+ 'Pz',
+ 'T3',
+ 'T4',
+ 'T5',
+ 'T6',
+ 'LOC',
+ 'ROC',
+ 'CHIN1',
+ 'CHIN2',
+ 'ECGL',
+ 'ECGR',
+ 'LAT1',
+ 'LAT2',
+ 'RAT1',
+ 'RAT2',
+ 'CHEST',
+ 'ABD',
+ 'FLOW',
+ 'SNORE',
+ 'DIF5',
+ 'DIF6',
+ 'POS',
+ 'DC2',
+ 'DC3',
+ 'DC4',
+ 'DC5',
+ 'DC6',
+ 'DC7',
+ 'DC8',
+ 'DC9',
+ 'DC10',
+ 'OSAT',
+ 'PR']</code></pre>
+</div>
+</div>
+<p>We can extract a subset of the channels by using the methods <code>.pick_channels()</code> and <code>.drop_channels()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select a subset of EEG channels</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># raw.pick_channels(['LOC-A2', 'ROC-A1', 'F3-A2', 'C3-A2', 'O1-A2', 'F4-A1', 'C4-A1', 'O2-A1', 'X1', 'X2', 'X3'])</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="making-use-of-the-annotations-in-the-recordings" class="level2">
+<h2 class="anchored" data-anchor-id="making-use-of-the-annotations-in-the-recordings">Making use of the annotations in the recordings</h2>
+<p>One of the peculiarities of this kind of data is they include medical annotations. We can access them in the atribute <code>.annotations</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>raw.annotations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Annotations | 2057 segments: Central Apnea (6), EEG arousal (131), ...&gt;</code></pre>
+</div>
+</div>
+<p>We can index this object to view more information:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>raw.annotations[<span class="dv">80</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>OrderedDict([('onset', 3420.0),
+             ('duration', 30.0),
+             ('description', 'Sleep stage W'),
+             ('orig_time',
+              datetime.datetime(2019, 1, 1, 22, 48, 22, tzinfo=datetime.timezone.utc))])</code></pre>
+</div>
+</div>
+<p>As we can see, they include all the information needed to split the signal into <em>epochs</em>:</p>
+<ul>
+<li><code>onset</code>: starting time of an epoch.</li>
+<li><code>duration</code>: duration of the epoch.</li>
+<li><code>description</code>: label set by the medical staff.</li>
+<li><code>orig_time</code>: date when the data was collected.</li>
+</ul>
+<p>We can use a <code>Counter</code> to count the different labels available in the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cntr <span class="op">=</span> Counter(raw.annotations.description)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cntr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Counter({'Montage:PR, Ref': 2,
+         'Start Recording': 1,
+         'Recording Analyzer - Sleep Events': 1,
+         'Recording Analyzer - Auto-Staging': 1,
+         'Recording Analyzer - ECG': 1,
+         'Recording Analyzer - Data Trends': 1,
+         'Video Recording ON': 1,
+         'Impedance at 10 kOhm': 1,
+         'Obstructive Apnea': 200,
+         'Patient Event': 2,
+         'Sleep stage W': 367,
+         'Lights Off': 1,
+         'Started Analyzer - Sleep Events': 1,
+         'Gain/Filter Change': 2,
+         'Oxygen Desaturation': 341,
+         'Oximeter Event': 272,
+         'Limb Movement': 109,
+         'Sleep stage N1': 29,
+         'EEG arousal': 131,
+         'Snoring': 251,
+         'Sleep stage N2': 323,
+         'Talking': 8,
+         'ORINANDO': 2,
+         'Hypopnea': 3,
+         'Central Apnea': 6})</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>plt.bar(cntr.keys(), cntr.values())</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">90</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Annotation"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Counts"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Count of each annotation"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="00_data_loading_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>As we can see, there are a lot of epochs marked with labels we don’t care about. Later on we will see how we can filter the epochs to keep only the ones we care about.</p>
+</section>
+<section id="extracting-epochs-from-the-full-recordings" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-epochs-from-the-full-recordings">Extracting epochs from the full recordings</h2>
+<p>To be able to use the data, we need to extract 30s epochs from the full recordings. We can do that easily with the function <code>mne.make_fixed_length_epochs()</code>, but we can make use of the included annotations and use <code>mne.events_from_annotations()</code> and <code>mne.Epochs</code> to directly obtain the epochs paired with their associated label.</p>
+<blockquote class="blockquote">
+<p><code>mne.events_from_annotations()</code> allows us to filter by regexp, so we will be able to keep only the epochs corresponding to the labels we care about.</p>
+</blockquote>
+<hr>
+<p><a href="https://github.com/Jorgvt/sleepstagingidal/blob/master/sleepstagingidal/data.py#L19" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="get_epochs" class="level3">
+<h3 class="anchored" data-anchor-id="get_epochs">get_epochs</h3>
+<blockquote class="blockquote">
+<pre><code> get_epochs (data:mne.io.edf.edf.RawEDF, channels:List[str]=None,
+             verbose:bool=False)</code></pre>
+</blockquote>
+<p>Extracts labelled epochs from an already loaded raw edf file.</p>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>data</td>
+<td>RawEDF</td>
+<td></td>
+<td>Raw file loaded with <code>mne.io.read_raw_edf</code>.</td>
+</tr>
+<tr class="even">
+<td>channels</td>
+<td>List</td>
+<td>None</td>
+<td>List of channels to keep. If None all the channels are kept.</td>
+</tr>
+<tr class="odd">
+<td>verbose</td>
+<td>bool</td>
+<td>False</td>
+<td>Amount of information shown when loading the file.</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>Tuple</strong></td>
+<td></td>
+<td><strong>Epochs object and samplign rate of the signal.</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><a href="https://github.com/Jorgvt/sleepstagingidal/blob/master/sleepstagingidal/data.py#L42" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="get_epochs_from_path" class="level3">
+<h3 class="anchored" data-anchor-id="get_epochs_from_path">get_epochs_from_path</h3>
+<blockquote class="blockquote">
+<pre><code> get_epochs_from_path (path:str, channels:List[str]=None,
+                       verbose:bool=False)</code></pre>
+</blockquote>
+<p>Extracts labelled epochs from an <code>.edf</code> file.</p>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>path</td>
+<td>str</td>
+<td></td>
+<td>Path to an <code>.edf</code> file.</td>
+</tr>
+<tr class="even">
+<td>channels</td>
+<td>List</td>
+<td>None</td>
+<td>List of channels to keep. If None all the channels are kept.</td>
+</tr>
+<tr class="odd">
+<td>verbose</td>
+<td>bool</td>
+<td>False</td>
+<td>Amount of information shown when loading the file.</td>
+</tr>
+<tr class="even">
+<td><strong>Returns</strong></td>
+<td><strong>Tuple</strong></td>
+<td></td>
+<td><strong>Epochs object and samplign rate of the signal.</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>epochs, sr <span class="op">=</span> get_epochs(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Used Annotations descriptions: ['Sleep stage N1', 'Sleep stage N2', 'Sleep stage W']
+Not setting metadata
+719 matching events found
+No baseline correction applied
+0 projection items activated
+Using data from preloaded Raw for 719 events and 3000 original time points ...
+1 bad epochs dropped</code></pre>
+</div>
+</div>
+<p>When this objects are created without <code>preloading=True</code>, we need to use the method <code>.get_data()</code> to access the data. As this kind of data uses a lot of memmory, the data of each epoch only are loaded when this method is called. We can check the shape of an epoch:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>epochs[<span class="dv">0</span>].get_data().shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Using data from preloaded Raw for 1 events and 3000 original time points ...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>(1, 50, 3000)</code></pre>
+</div>
+</div>
+<p>The dimmensions of an epoch are: <code>(1, Number of channels, Data points per channel)</code>.</p>
+<blockquote class="blockquote">
+<p>Actually, the first dimmension corresponds to the number of epochs loaded, but we only loaded one epoch.</p>
+</blockquote>
+<p>Lastly, this object stores two important atributes:</p>
+<ul>
+<li><code>.events</code>: contains the parsed labels in the last dimension.</li>
+<li><code>.event_id</code>: dictionary mapping the parsed labels to the original labels.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>epochs.events</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([[ 228000,       0,       3],
+       [ 231000,       0,       3],
+       [ 234000,       0,       3],
+       ...,
+       [2373000,       0,       3],
+       [2376000,       0,       3],
+       [2379000,       0,       3]])</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>epochs.event_id</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>{'Sleep stage N1': 1, 'Sleep stage N2': 2, 'Sleep stage W': 3}</code></pre>
+</div>
+</div>
+<p>Comes to our attention that this patient has only been annotated with 3 out of 5 of the possible sleep stages. This might be important to look at to differentiate from full labeled patients and the rest.</p>
+</section>
+</section>
+<section id="inter-channel-operations" class="level2">
+<h2 class="anchored" data-anchor-id="inter-channel-operations">Inter-channel operations</h2>
+<p>Real practitioners don’t actually use the data as we have imported it. They only utilize 9 channels, and perform reference operations between them. We can now reload the data using only this channels to save memory and perform the reference operations:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>channels <span class="op">=</span> [<span class="st">"C3"</span>, <span class="st">"C4"</span>, <span class="st">"A1"</span>, <span class="st">"A2"</span>, <span class="st">"O1"</span>, <span class="st">"O2"</span>, <span class="st">"LOC"</span>, <span class="st">"ROC"</span>, <span class="st">"LAT1"</span>, <span class="st">"LAT2"</span>, <span class="st">"ECGL"</span>, <span class="st">"ECGR"</span>, <span class="st">"CHIN1"</span>, <span class="st">"CHIN2"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>epochs, sr <span class="op">=</span> get_epochs(raw, channels<span class="op">=</span>channels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Used Annotations descriptions: ['Sleep stage N1', 'Sleep stage N2', 'Sleep stage W']
+Not setting metadata
+719 matching events found
+No baseline correction applied
+0 projection items activated
+Using data from preloaded Raw for 719 events and 3000 original time points ...
+1 bad epochs dropped</code></pre>
+</div>
+</div>
+<p>The reference operations they use are:</p>
+<p><span class="math display">\[ C3 - \frac{A1+A2}{2} \]</span> <span class="math display">\[ C4 - \frac{A1+A2}{2} \]</span> <span class="math display">\[ 01 - \frac{A1+A2}{2} \]</span> <span class="math display">\[ 02 - \frac{A1+A2}{2} \]</span> <span class="math display">\[ LOC - A2 \]</span> <span class="math display">\[ ROC - A1 \]</span> <span class="math display">\[ LAT1 - LAT2 \]</span> <span class="math display">\[ ECGL - ECGR \]</span> <span class="math display">\[ CHIN1 - CHIN2 \]</span></p>
+<p>In order to mantain the code clean, we can put our data into a dictionary and then perform the operations. But fist we will load all the data in memory:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> epochs.get_data()</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> epochs.events[:,<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>X.shape, Y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Using data from preloaded Raw for 718 events and 3000 original time points ...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>((718, 14, 3000), (718,))</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to expand_dims to keep the channels dim</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {ch:np.expand_dims(X[:,i,:],<span class="dv">1</span>) <span class="cf">for</span> i, ch <span class="kw">in</span> <span class="bu">enumerate</span>(channels)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>channel1 <span class="op">=</span> data[<span class="st">"C3"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>channel2 <span class="op">=</span> data[<span class="st">"C4"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>channel3 <span class="op">=</span> data[<span class="st">"O1"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>channel4 <span class="op">=</span> data[<span class="st">"O2"</span>] <span class="op">-</span> (data[<span class="st">"A1"</span>]<span class="op">+</span>data[<span class="st">"A2"</span>])<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>channel5 <span class="op">=</span> data[<span class="st">"LOC"</span>] <span class="op">-</span> data[<span class="st">"A2"</span>]</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>channel6 <span class="op">=</span> data[<span class="st">"ROC"</span>] <span class="op">-</span> data[<span class="st">"A1"</span>]</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>channel7 <span class="op">=</span> data[<span class="st">"LAT1"</span>] <span class="op">-</span> data[<span class="st">"LAT2"</span>]</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>channel8 <span class="op">=</span> data[<span class="st">"ECGL"</span>] <span class="op">-</span> data[<span class="st">"ECGR"</span>]</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>channel9 <span class="op">=</span> data[<span class="st">"CHIN1"</span>] <span class="op">-</span> data[<span class="st">"CHIN2"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can concatenate the new channels into a new array:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.concatenate([channel1, channel2, channel3, channel4, channel5, channel6, channel7, channel8, channel9],<span class="dv">1</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(718, 9, 3000)</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
